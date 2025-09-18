@@ -401,7 +401,7 @@ const PacuJalurTourism = () => {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section id="home" className={`relative min-h-screen flex items-center justify-center overflow-hidden ${isDarkMode ? "bg-emerald-900" : "bg-stone-100"}`}>
         <motion.div className="absolute inset-0 z-0" style={{ y, opacity }}>
           <AnimatePresence mode="sync">
             <motion.img
@@ -481,7 +481,7 @@ const PacuJalurTourism = () => {
       </section>
 
       {/* Cultural Facts Section */}
-      <section className={`py-20 ${isDarkMode ? "bg-emerald-900" : "bg-stone-100"}`}>
+      <section className={`py-20  ${isDarkMode ? "bg-emerald-900" : "bg-stone-100"}`}>
         <div className="max-w-7xl mx-auto px-6">
           <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${isDarkMode ? "text-white" : "bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent"}`}>Fakta Budaya</h2>

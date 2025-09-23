@@ -34,7 +34,7 @@ const CulturalFactsSection = ({ isDarkMode }: { isDarkMode: boolean }) => (
         viewport={{ once: true }}
       >
         <h2
-          className={`text-4xl md:text-5xl font-bold mb-6 ${
+          className={`text-2xl md:text-4xl font-bold mb-6 ${
             isDarkMode
               ? "text-white"
               : "bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent"
@@ -42,7 +42,7 @@ const CulturalFactsSection = ({ isDarkMode }: { isDarkMode: boolean }) => (
         >
           Fakta Budaya
         </h2>
-        <p className={`text-xl max-w-3xl mx-auto ${isDarkMode ? "text-stone-300" : "text-gray-600"}`}>
+        <p className={`text-lg max-w-3xl mx-auto ${isDarkMode ? "text-stone-300" : "text-gray-600"}`}>
           Kenali lebih dalam tentang tradisi Pacu Jalur yang mempesona
         </p>
       </motion.div>

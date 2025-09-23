@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { Link } from "react-scroll";
+import { useNavigate } from "react-router-dom";
 import iconJalur from "@/assets/sampan.png";
 
 const Navigation = ({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean; setIsDarkMode: (value: boolean) => void }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +17,10 @@ const Navigation = ({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean; setIsD
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
 
   return (
     <nav
@@ -112,6 +118,7 @@ const Navigation = ({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean; setIsD
               />
             </motion.button>
             <motion.button
+              onClick={handleLoginClick}
               className="relative ml-4 bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-600 text-white px-8 py-3 rounded-full font-semibold overflow-hidden group shadow-lg"
               whileHover={{
                 scale: 1.05,
@@ -122,7 +129,7 @@ const Navigation = ({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean; setIsD
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              <span className="relative z-10">Beli Tiket</span>
+              <span className="relative z-10">Login</span>
               <motion.div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-amber-600 opacity-0 group-hover:opacity-100" initial={{ x: "-100%" }} whileHover={{ x: "0%" }} transition={{ duration: 0.5 }} />
               <motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full" transition={{ duration: 0.6 }} />
             </motion.button>
@@ -173,6 +180,7 @@ const Navigation = ({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean; setIsD
                 </motion.div>
               ))}
               <motion.button
+                onClick={handleLoginClick}
                 className="w-full mt-4 bg-gradient-to-r from-amber-500 to-yellow-600 text-white py-3 rounded-lg font-semibold relative overflow-hidden group"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -180,7 +188,7 @@ const Navigation = ({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean; setIsD
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.4 }}
               >
-                <span className="relative z-10">Beli Tiket</span>
+                <span className="relative z-10">Login</span>
                 <motion.div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-600 opacity-0 group-hover:opacity-100" initial={{ scale: 0 }} whileHover={{ scale: 1 }} transition={{ duration: 0.3 }} />
               </motion.button>
             </motion.div>
@@ -191,4 +199,4 @@ const Navigation = ({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean; setIsD
   );
 };
 
-export default Navigation; 
+export default Navigation;

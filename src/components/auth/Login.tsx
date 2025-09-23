@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { motion, useAnimation } from "framer-motion";
 import { Route, Compass, ArrowRight, Eye, EyeOff } from "lucide-react";
 
-const Login = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
+const LoginPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -140,4 +140,4 @@ const Login = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
   );
 };
 
-export default Login;
+export default LoginPage;

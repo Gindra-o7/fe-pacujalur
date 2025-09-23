@@ -16,7 +16,7 @@ const GallerySection = ({ isDarkMode, galleryImages }: GallerySectionProps) => (
         viewport={{ once: true }}
       >
         <h2
-          className={`text-4xl md:text-5xl font-bold mb-6 ${
+          className={`text-3xl md:text-4xl font-bold mb-6 ${
             isDarkMode
               ? "text-white"
               : "bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent"
@@ -24,7 +24,7 @@ const GallerySection = ({ isDarkMode, galleryImages }: GallerySectionProps) => (
         >
           Galeri Momen
         </h2>
-        <p className={`text-xl max-w-3xl mx-auto ${isDarkMode ? "text-stone-300" : "text-gray-600"}`}>
+        <p className={`text-lg max-w-3xl mx-auto ${isDarkMode ? "text-stone-300" : "text-gray-600"}`}>
           Koleksi foto dan video terbaik dari festival Pacu Jalur yang telah berlangsung
         </p>
       </motion.div>

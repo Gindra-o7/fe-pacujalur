@@ -43,14 +43,14 @@ const Hero: React.FC<HeroProps> = ({ y, opacity, currentImageIndex, galleryImage
           Festival Budaya Kuantan Singingi
         </motion.div>
 
-        <h1 className="text-5xl md:text-8xl font-bold mb-6 leading-tight">
+        <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
           <span className="bg-gradient-to-r from-white via-amber-200 to-yellow-200 bg-clip-text text-transparent">
             Pacu Jalur
           </span>
         </h1>
 
         <motion.p
-          className="text-xl md:text-2xl mb-8 font-light max-w-4xl mx-auto leading-relaxed"
+          className="text-lg md:text-lg mb-8 font-light max-w-4xl mx-auto leading-relaxed "
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}

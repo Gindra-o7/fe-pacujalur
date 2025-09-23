@@ -56,7 +56,7 @@ const BookingModal = memo(({ show, event, onClose, isDarkMode }: { show: boolean
                   onClose();
                 }}
               >
-                Book Sekarang - {event.price}
+                Booking Sekarang! - {event.price}
               </button>
               <button className={`px-6 py-4 rounded-xl transition-colors ${isDarkMode ? "bg-emerald-800 hover:bg-emerald-700" : "bg-gray-100 hover:bg-gray-200"}`} onClick={onClose}>
                 <Bookmark className={`w-5 h-5 ${isDarkMode ? "text-gray-300" : "text-gray-600"}`} />

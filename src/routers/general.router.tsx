@@ -1,6 +1,7 @@
 import ForbiddenPage from "@/pages/publics/forbidden.page";
 import LandingPage from "@/pages/publics/landing.page";
 import NotFoundPage from "@/pages/publics/not-found.page";
+import LoginPage from "@/pages/publics/login.page";
 
 export const generalRouter = [
 	{
@@ -18,5 +19,9 @@ export const generalRouter = [
 	{
 		path: "*",
 		element: <NotFoundPage />,
+	},
+	{
+		path: "/login",
+		element: <LoginPage />,
 	},
 ]

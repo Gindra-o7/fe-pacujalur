@@ -27,28 +27,30 @@ const Navigation = ({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean; setIsD
     >
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <motion.div className="flex items-center gap-3" initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, ease: "easeOut" }}>
-            <motion.div whileHover={{ rotate: 360, scale: 1.1 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.6, ease: "easeInOut" }} className="relative">
-              <img src={iconJalur} alt="Logo" className="w-12 h-12 drop-shadow-lg" />
-              <motion.div
-                className="absolute inset-0 rounded-full border-2 border-amber-400/30"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.6, 0.3],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
+          <Link to="home" smooth={true} duration={500} offset={-100} className="cursor-pointer">
+            <motion.div className="flex items-center gap-3" initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, ease: "easeOut" }}>
+              <motion.div whileHover={{ rotate: 360, scale: 1.1 }} whileTap={{ scale: 0.95 }} transition={{ duration: 0.6, ease: "easeInOut" }} className="relative">
+                <img src={iconJalur} alt="Logo" className="w-12 h-12 drop-shadow-lg" />
+                <motion.div
+                  className="absolute inset-0 rounded-full border-2 border-amber-400/30"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.6, 0.3],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+              </motion.div>
+              <motion.div className="text-2xl font-bold bg-gradient-to-r from-emerald-600 via-teal-500 to-amber-500 bg-clip-text text-transparent" whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
+                <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}>
+                  Pacu Jalur
+                </motion.span>
+              </motion.div>
             </motion.div>
-            <motion.div className="text-2xl font-bold bg-gradient-to-r from-emerald-600 via-teal-500 to-amber-500 bg-clip-text text-transparent" whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
-              <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}>
-                Pacu Jalur
-              </motion.span>
-            </motion.div>
-          </motion.div>
+          </Link>
           <div className="hidden md:flex items-center space-x-2">
             {[
               { to: "home", label: "Beranda", delay: 0.1 },
@@ -189,4 +191,4 @@ const Navigation = ({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean; setIsD
   );
 };
 
-export default Navigation;
+export default Navigation; 

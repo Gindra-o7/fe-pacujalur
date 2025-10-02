@@ -4,8 +4,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Calendar, ImageIcon, DollarSign, BedDouble } from "lucide-react";
 
+interface Booking {
+  id: string;
+  user: string;
+  item: string;
+  status: "Confirmed" | "Pending" | "Cancelled";
+  amount: number;
+}
+
 const AdminDashboard = () => {
-  // Data ini nantinya akan diambil dari API
   const summaryData = {
     totalEvents: 12,
     totalAccommodations: 25,
@@ -13,12 +20,7 @@ const AdminDashboard = () => {
     galleryImages: 88,
   };
 
-  const recentBookings = [
-    { id: "BOOK-001", user: "Andi Saputra", item: "Penginapan Melati", status: "Confirmed", amount: 350000 },
-    { id: "BOOK-002", user: "Budi Hartono", item: "Tiket Festival Pacu Jalur", status: "Pending", amount: 150000 },
-    { id: "BOOK-003", user: "Citra Lestari", item: "Penginapan Anggrek", status: "Confirmed", amount: 450000 },
-    { id: "BOOK-004", user: "Dewi Anggraini", item: "Penginapan Mawar", status: "Cancelled", amount: 300000 },
-  ];
+  const recentBookings: Booking[] = [];
 
   return (
     <DashboardLayout>

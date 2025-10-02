@@ -9,12 +9,14 @@ import AuthService from "@/services/api/public/auth.service";
 import { saveAuthData } from "@/helpers/auth.helper";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
 
 const LoginPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const pathControls = useAnimation();
 
   useEffect(() => {
@@ -24,7 +26,17 @@ const LoginPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
     });
   }, [pathControls]);
 
-  const navigate = useNavigate()
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("rememberedEmail");
+    const savedRememberMe = localStorage.getItem("rememberMe") === "true";
+
+    if (savedEmail && savedRememberMe) {
+      setEmail(savedEmail);
+      setRememberMe(true);
+    }
+  }, []);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -39,17 +51,25 @@ const LoginPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
       } else {
         toast.error(response.message || "Terjadi kesalahan saat login.");
       }
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || "Email atau password salah.";
+    } catch (error) {
+      let errorMessage = "Email atau password salah.";
+      if (error instanceof AxiosError && error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      }
       toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !isLoading) {
+      handleSubmit(e);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative overflow-hidden">
-      {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <svg className="w-full h-full" viewBox="0 0 1200 800">
           <defs>
@@ -61,7 +81,6 @@ const LoginPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
         </svg>
       </div>
 
-      {/* Animated Path */}
       <div className="absolute inset-0 pointer-events-none">
         <svg className="w-full h-full" viewBox="0 0 1200 800">
           <motion.path d="M 0 400 Q 300 200 600 400 T 1200 400" fill="none" stroke="url(#pathGradient)" strokeWidth="3" strokeDasharray="10,5" animate={pathControls} initial={{ pathLength: 0, opacity: 0 }} />
@@ -75,7 +94,6 @@ const LoginPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
         </svg>
       </div>
 
-      {/* Floating Elements */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div className="absolute top-20 left-20 text-blue-400/20" animate={{ y: [0, -20, 0], rotate: [0, 360, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}>
           <Compass size={40} />
@@ -85,7 +103,6 @@ const LoginPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
         </motion.div>
       </div>
 
-      {/* Main Content */}
       <div className="flex items-center justify-center min-h-screen relative z-10 px-4">
         <motion.div initial={{ opacity: 0, y: 50, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.8, type: "spring", stiffness: 100, damping: 15 }} className="w-full max-w-md">
           <Card className="backdrop-blur-sm bg-white/90 dark:bg-gray-900/90 shadow-2xl border border-white/20">
@@ -105,13 +122,13 @@ const LoginPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
             <CardContent className="space-y-6">
               <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5, duration: 0.6 }} className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="m@example.com" value={email} onChange={(e) => setEmail(e.target.value)} className="pl-4 pr-4 py-3" />
+                <Input id="email" type="email" placeholder="m@example.com" value={email} onChange={(e) => setEmail(e.target.value)} onKeyPress={handleKeyPress} className="pl-4 pr-4 py-3" />
               </motion.div>
 
               <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.7, duration: 0.6 }} className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <div className="relative">
-                  <Input id="password" type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} className="pl-4 pr-12 py-3" />
+                  <Input id="password" type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} className="pl-4 pr-12 py-3" onKeyPress={handleKeyPress}/>
                   <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
@@ -120,7 +137,7 @@ const LoginPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
 
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9, duration: 0.6 }} className="flex justify-between items-center text-sm">
                 <div className="flex items-center space-x-2">
-                  <input type="checkbox" id="remember" className="w-4 h-4" />
+                  <input type="checkbox" id="remember" className="w-4 h-4 cursor-pointer" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
                   <label htmlFor="remember" className="text-gray-600">
                     Ingat saya
                   </label>

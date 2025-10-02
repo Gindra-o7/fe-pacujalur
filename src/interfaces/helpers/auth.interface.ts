@@ -1,9 +1,7 @@
-import { JwtPayload } from "jwt-decode";
-
-export interface CustomJwtPayload extends JwtPayload {
-  realm_access: {
-    roles: string[];
-  };
+export interface CustomJwtPayload {
+  full_name: string;
+  email: string;
+  role: string;
 }
 
 export interface DecodeTokenProps {

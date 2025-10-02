@@ -24,7 +24,7 @@ export const getRoles = (token: string): string[] => {
 };
 
 // Fungsi untuk menyimpan token dan data pengguna ke localStorage
-export const saveAuthData = (token: string, user: any) => {
+export const saveAuthData = (token: string, user: CustomJwtPayload) => {
   localStorage.setItem("token", token);
   localStorage.setItem("user", JSON.stringify(user));
 };

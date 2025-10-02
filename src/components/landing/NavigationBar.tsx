@@ -2,13 +2,16 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { Link } from "react-scroll";
+import { Link as RouterLink } from "react-scroll";
 import { useNavigate } from "react-router-dom";
 import iconJalur from "@/assets/sampan.png";
+import { useAuth } from "@/hooks/use-auth";
 
 const Navigation = ({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean; setIsDarkMode: (value: boolean) => void }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +23,10 @@ const Navigation = ({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean; setIsD
 
   const handleLoginClick = () => {
     navigate("/login");
+  };
+
+  const handleDashboardClick = () => {
+    navigate("/admin");
   };
 
   return (
@@ -111,22 +118,42 @@ const Navigation = ({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean; setIsD
                 }}
               />
             </motion.button>
-            <motion.button
-              onClick={handleLoginClick}
-              className="relative ml-4 bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-600 text-white px-8 py-3 rounded-full font-semibold overflow-hidden group shadow-lg"
-              whileHover={{
-                scale: 1.05,
-                shadow: "0 20px 40px rgba(245, 158, 11, 0.4)",
-              }}
-              whileTap={{ scale: 0.98 }}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
-              <span className="relative z-10">Login</span>
-              <motion.div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-amber-600 opacity-0 group-hover:opacity-100" initial={{ x: "-100%" }} whileHover={{ x: "0%" }} transition={{ duration: 0.5 }} />
-              <motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full" transition={{ duration: 0.6 }} />
-            </motion.button>
+            {isAuthenticated ? (
+              <RouterLink to="/admin" onClick={handleDashboardClick}>
+                <motion.button
+                  className="relative ml-4 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-600 text-white px-8 py-3 rounded-full font-semibold overflow-hidden group shadow-lg"
+                  whileHover={{
+                    scale: 1.05,
+                    shadow: "0 20px 40px rgba(20, 184, 166, 0.4)",
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                >
+                  <span className="relative z-10">Dashboard</span>
+                  <motion.div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-emerald-600 opacity-0 group-hover:opacity-100" initial={{ x: "-100%" }} whileHover={{ x: "0%" }} transition={{ duration: 0.5 }} />
+                </motion.button>
+              </RouterLink>
+            ) : (
+              <RouterLink to="/login" onClick={handleLoginClick}>
+                <motion.button
+                  className="relative ml-4 bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-600 text-white px-8 py-3 rounded-full font-semibold overflow-hidden group shadow-lg"
+                  whileHover={{
+                    scale: 1.05,
+                    shadow: "0 20px 40px rgba(245, 158, 11, 0.4)",
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                >
+                  <span className="relative z-10">Login</span>
+                  <motion.div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-amber-600 opacity-0 group-hover:opacity-100" initial={{ x: "-100%" }} whileHover={{ x: "0%" }} transition={{ duration: 0.5 }} />
+                  <motion.div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full" transition={{ duration: 0.6 }} />
+                </motion.button>
+              </RouterLink>
+            )}
           </div>
           <motion.button className="md:hidden p-2 rounded-lg" onClick={() => setIsMenuOpen(!isMenuOpen)} whileTap={{ scale: 0.9 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
             <motion.div animate={{ rotate: isMenuOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
@@ -173,18 +200,36 @@ const Navigation = ({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean; setIsD
                   </Link>
                 </motion.div>
               ))}
-              <motion.button
-                onClick={handleLoginClick}
-                className="w-full mt-4 bg-gradient-to-r from-amber-500 to-yellow-600 text-white py-3 rounded-lg font-semibold relative overflow-hidden group"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.4 }}
-              >
-                <span className="relative z-10">Login</span>
-                <motion.div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-600 opacity-0 group-hover:opacity-100" initial={{ scale: 0 }} whileHover={{ scale: 1 }} transition={{ duration: 0.3 }} />
-              </motion.button>
+              {isAuthenticated ? (
+                <RouterLink to="/admin" onClick={handleDashboardClick} className="w-full">
+                  <motion.button
+                    onClick={() => setIsMenuOpen(false)}
+                    className="w-full mt-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white py-3 rounded-lg font-semibold relative overflow-hidden group"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.4 }}
+                  >
+                    <span className="relative z-10">Dashboard</span>
+                  </motion.button>
+                </RouterLink>
+              ) : (
+                <RouterLink to="/login" onClick={handleLoginClick} className="w-full">
+                  <motion.button
+                    onClick={() => setIsMenuOpen(false)}
+                    className="w-full mt-4 bg-gradient-to-r from-amber-500 to-yellow-600 text-white py-3 rounded-lg font-semibold relative overflow-hidden group"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.4 }}
+                  >
+                    <span className="relative z-10">Login</span>
+                    <motion.div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-orange-600 opacity-0 group-hover:opacity-100" initial={{ scale: 0 }} whileHover={{ scale: 1 }} transition={{ duration: 0.3 }} />
+                  </motion.button>
+                </RouterLink>
+              )}
             </motion.div>
           </motion.div>
         )}

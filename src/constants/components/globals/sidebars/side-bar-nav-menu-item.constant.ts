@@ -1,30 +1,17 @@
 import { SideBarNavMenuItemsProps } from "@/interfaces/components/globals/sidebars/side-bar-nav-menu.interface";
 import {
-  BackpackIcon,
-  LucideHistory,
+  LayoutDashboardIcon,
 } from "lucide-react";
 
 export const SideBarNavMenuItems: SideBarNavMenuItemsProps = {
-  mahasiswa: [
+  ADMIN: [
     {
-      label: "Muroja'ah",
+      label: "Dashboard",
       menus: [
         {
-          title: "Detail Riwayat",
-          url: "/mahasiswa/murojaah/detail-riwayat",
-          icon: LucideHistory,
-        },
-      ],
-    },
-  ],
-  dosen: [
-    {
-      label: "Muroja'ah",
-      menus: [
-        {
-          title: "Mahasiswa PA",
-          url: "/dosen/murojaah/mahasiswa-pa",
-          icon: BackpackIcon,
+          title: "Dashboard",
+          url: "/admin/dashboard",
+          icon: LayoutDashboardIcon,
         },
       ],
     },

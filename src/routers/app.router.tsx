@@ -1,12 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import { generalRouter } from "./general.router";
-import { mahasiswaRouter } from "./mahasiswa.router";
-import { dosenRouter } from "./dosen.router";
+import { adminRouter } from "./admin.router";
 
 const router = createBrowserRouter([
 	...generalRouter,
-	...mahasiswaRouter,
-	...dosenRouter,
+	...adminRouter,
 ]);
 
 export default router;

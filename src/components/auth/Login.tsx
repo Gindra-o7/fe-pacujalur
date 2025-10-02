@@ -1,10 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { motion, useAnimation } from "framer-motion";
 import { Route, Compass, ArrowRight, Eye, EyeOff } from "lucide-react";
+import AuthService from "@/services/api/public/auth.service";
+import { saveAuthData } from "@/helpers/auth.helper";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
   const [email, setEmail] = useState("");
@@ -20,11 +24,27 @@ const LoginPage = ({ onNavigate }: { onNavigate: (page: string) => void }) => {
     });
   }, [pathControls]);
 
-  const handleSubmit = async () => {
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => {
+
+    try {
+      const response = await AuthService.Login({ email, password });
+      if (response.success && response.data.token) {
+        saveAuthData(response.data.token, response.data.user);
+        toast.success("Login berhasil!");
+        navigate("/admin");
+      } else {
+        toast.error(response.message || "Terjadi kesalahan saat login.");
+      }
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || "Email atau password salah.";
+      toast.error(errorMessage);
+    } finally {
       setIsLoading(false);
-    }, 2000);
+    }
   };
 
   return (

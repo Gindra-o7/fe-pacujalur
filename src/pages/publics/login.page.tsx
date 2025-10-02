@@ -44,7 +44,6 @@ export default function CompleteAuthSystem() {
         </svg>
       </div>
       
-      {/* Konten Halaman yang berganti */}
       <div className="relative z-10">
         {currentPage === 'login' && <LoginPage onNavigate={handleNavigate} />}
         {currentPage === 'forgot' && <ForgotPasswordPage onNavigate={handleNavigate} />}

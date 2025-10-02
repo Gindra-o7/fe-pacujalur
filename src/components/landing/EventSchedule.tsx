@@ -70,13 +70,10 @@ const EventsSchedule = ({ isDarkMode, events, handleBookEvent }: EventsScheduleP
               whileHover={{ y: -8, scale: 1.02 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
             >
-              {/* Animated Border */}
               <div className="absolute inset-0 bg-gradient-to-r from-amber-400 via-orange-500 to-amber-400 rounded-3xl opacity-75 animate-pulse" />
               <div className={`absolute inset-1 ${isDarkMode ? "bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900" : "bg-gradient-to-br from-white via-emerald-50 to-teal-50"} rounded-2xl`} />
               
-              {/* Content */}
               <div className="relative z-10">
-                {/* Image Section */}
                 <div className="relative h-64 overflow-hidden">
                   <img
                     src={nextEvent.image}
@@ -85,7 +82,6 @@ const EventsSchedule = ({ isDarkMode, events, handleBookEvent }: EventsScheduleP
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                   
-                  {/* Floating Elements */}
                   <motion.div
                     className="absolute top-4 left-4 flex items-center gap-2 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full text-gray-800 font-bold shadow-lg"
                     animate={{ y: [0, -5, 0] }}
@@ -113,7 +109,6 @@ const EventsSchedule = ({ isDarkMode, events, handleBookEvent }: EventsScheduleP
                     </motion.div>
                   </div>
 
-                  {/* Live Badge */}
                   <motion.div
                     className="absolute bottom-4 left-4 flex items-center gap-2 bg-red-500 text-white px-3 py-1.5 rounded-full text-sm font-bold"
                     animate={{ opacity: [1, 0.7, 1] }}
@@ -124,7 +119,6 @@ const EventsSchedule = ({ isDarkMode, events, handleBookEvent }: EventsScheduleP
                   </motion.div>
                 </div>
 
-                {/* Content Section */}
                 <div className="p-8">
                   <div className="flex items-center gap-2 mb-4">
                     <Award className="w-6 h-6 text-amber-500" />
@@ -155,7 +149,6 @@ const EventsSchedule = ({ isDarkMode, events, handleBookEvent }: EventsScheduleP
                     {nextEvent.description}
                   </p>
 
-                  {/* CTA Buttons */}
                   <div className="flex gap-4">
                     <motion.button
                       onClick={() => handleBookEvent(nextEvent)}
@@ -185,13 +178,11 @@ const EventsSchedule = ({ isDarkMode, events, handleBookEvent }: EventsScheduleP
                 </div>
               </div>
 
-              {/* Decorative Elements */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-amber-400/20 to-transparent rounded-full blur-2xl" />
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-emerald-400/20 to-transparent rounded-full blur-xl" />
             </motion.div>
           </motion.div>
 
-          {/* Other Events - Right Side */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}

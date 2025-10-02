@@ -71,17 +71,11 @@ const Navigation = ({ isDarkMode, setIsDarkMode }: { isDarkMode: boolean; setIsD
                   smooth={true}
                   duration={500}
                   offset={item.to === "home" ? -100 : -80}
-                  className={`relative px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer group
+                  className={`relative px-4 py-2 transition-all duration-300 cursor-pointer group
                     ${isDarkMode ? "text-stone-300 hover:text-amber-400" : isScrolled ? "text-gray-700 hover:text-amber-600" : "text-white hover:text-amber-300"}`}
                 >
                   <span className="relative z-10">{item.label}</span>
-                  <motion.div
-                    className={`absolute inset-0 rounded-lg ${isDarkMode ? "bg-emerald-800/30" : "bg-gray-100/80"} opacity-0 group-hover:opacity-100`}
-                    initial={{ scale: 0.8 }}
-                    whileHover={{ scale: 1 }}
-                    transition={{ duration: 0.2 }}
-                  />
-                  <motion.div className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-amber-400 to-yellow-500" initial={{ width: "0%" }} whileHover={{ width: "100%" }} transition={{ duration: 0.3 }} />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out origin-left" />
                 </Link>
               </motion.div>
             ))}

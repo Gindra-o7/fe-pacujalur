@@ -1,37 +1,31 @@
-import { useEffect, useState } from "react";
-import LoadingComponent from "@/components/globals/loading";
-import { hasRole } from "@/helpers/auth.helper";
-import { ProtectedRouteProps } from "@/interfaces/routers/protected.interface";
-import { useAuth } from "react-oidc-context";
 import { Navigate } from "react-router-dom";
+import { getToken, hasRole } from "@/helpers/auth.helper";
+import { ProtectedRouteProps } from "@/interfaces/routers/protected.interface";
 
+/**
+ * Komponen untuk melindungi rute yang memerlukan otentikasi.
+ * @param children - Komponen halaman yang akan ditampilkan jika otentikasi berhasil.
+ * @param roles - (Opsional) Array peran yang diizinkan mengakses halaman ini.
+ */
 const ProtectedRoute = ({ children, roles }: ProtectedRouteProps) => {
-  const auth = useAuth();
-  const [loading, setLoading] = useState(true);
+  // Ambil token langsung dari localStorage
+  const token = getToken();
 
-  useEffect(() => {
-    auth.signinSilent().finally(() => setLoading(false));
-  }, []);
+  // 1. Cek apakah pengguna sudah login (apakah token ada?)
+  if (!token) {
+    // Jika tidak ada token, alihkan ke halaman login
+    return <Navigate to="/login" replace />;
+  }
 
-  useEffect(() => {
-    if (auth.error) {
-      auth.signoutRedirect();
+  // 2. Jika rute ini memerlukan peran spesifik, periksa perannya
+  if (roles && roles.length > 0) {
+    if (!hasRole({ token, roles })) {
+      // Jika peran tidak cocok, alihkan ke halaman 'forbidden' (akses ditolak)
+      return <Navigate to="/forbidden" replace />;
     }
-  }, [auth.error]);
+  }
 
-  // Tampilkan loading hingga Keycloak siap
-  if (auth.isLoading || loading)
-    return (
-      <LoadingComponent className="absolute z-50 flex items-center justify-center w-full h-full bg-black bg-opacity-50" />
-    );
-
-  // Periksa apakah pengguna sudah terautentikasi atau sesi telah habis
-  if (!auth.isAuthenticated) return <Navigate to="/" />;
-
-  // Periksa apakah pengguna memiliki salah satu dari peran yang diizinkan
-  if (!hasRole({ token: auth.user!.access_token, roles }))
-    return <Navigate to="/forbidden" />;
-
+  // 3. Jika semua pemeriksaan berhasil, tampilkan halaman yang diminta
   return children;
 };
 

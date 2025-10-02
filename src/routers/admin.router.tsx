@@ -10,7 +10,7 @@ export const adminRouter = [
   {
     path: "/admin/dashboard",
     element: (
-      <ProtectedRoute roles={["admin"]}>
+      <ProtectedRoute roles={["ADMIN"]}>
         <AdminDashboard />
       </ProtectedRoute>
     ),

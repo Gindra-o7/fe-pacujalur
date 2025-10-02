@@ -34,3 +34,13 @@ export type TLoginResponse = {
     expires_in: number;
   };
 };
+
+export type TProfileResponse = {
+  success: boolean;
+  message: string;
+  data: {
+    email: string;
+    full_name: string;
+    role: string;
+  };
+};

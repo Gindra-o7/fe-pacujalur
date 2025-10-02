@@ -16,7 +16,6 @@ import {
 	useSidebar,
 } from "@/components/ui/sidebar";
 import { UserProfileProps } from "@/interfaces/components/globals/sidebars/app-sidebar.interface";
-import { useAuth } from "react-oidc-context";
 import {
 	AlertDialogAction,
 	AlertDialogCancel,
@@ -27,10 +26,28 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useNavigate } from "react-router-dom";
+import AuthService from "@/services/api/public/auth.service";
+import { removeAuthData } from "@/helpers/auth.helper";
+import { toast } from "sonner";
 
 export function SideBarFooter({ name, email, avatar }: UserProfileProps) {
-	const auth = useAuth();
 	const { isMobile } = useSidebar();
+	const navigate = useNavigate();
+
+	
+	const handleLogout = async () => {
+    try {
+      await AuthService.Logout();
+    } catch (error) {
+      console.error("Gagal menghubungi server saat logout:", error);
+    } finally {
+      removeAuthData();
+      toast.success("Anda berhasil logout.");
+      navigate("/");
+    }
+  };
+	
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem>
@@ -112,7 +129,7 @@ export function SideBarFooter({ name, email, avatar }: UserProfileProps) {
 								<AlertDialogCancel>Gajadi deh</AlertDialogCancel>
 								<AlertDialogAction
 									className="bg-destructive text-destructive-foreground hover:bg-destructive/85"
-									onClick={() => auth.signoutRedirect()}
+									onClick={() => handleLogout()}
 								>
 									Iya, saya yakin
 								</AlertDialogAction>

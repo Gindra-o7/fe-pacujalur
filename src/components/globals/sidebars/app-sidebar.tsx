@@ -2,8 +2,7 @@ import * as React from "react";
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
 
-import { getUser, getToken, removeAuthData } from "@/helpers/auth.helper";
-import AuthService from "@/services/api/public/auth.service";
+import { getUser, getToken, getRoles } from "@/helpers/auth.helper";
 
 import { SideBarHeader } from "./side-bar-header";
 import { SideBarFooter } from "./side-bar-footer";
@@ -13,8 +12,6 @@ import { Separator } from "@/components/ui/separator";
 import { capitalizeFirstLetter } from "@/helpers/global.helper";
 import { UserProfileProps } from "@/interfaces/components/globals/sidebars/app-sidebar.interface";
 import { SideBarNavMenuGroupProps } from "@/interfaces/components/globals/sidebars/side-bar-nav-menu.interface";
-import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [user, setUser] = React.useState<UserProfileProps>({
@@ -25,20 +22,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [roles, setRoles] = React.useState<string[]>([]);
   const [roleBasedSideBarNavMenuItems, setRoleBasedSideBarNavMenuItems] = React.useState<SideBarNavMenuGroupProps[]>([]);
 
-	const navigate = useNavigate();
-
   React.useEffect(() => {
     const storedUser = getUser();
     const token = getToken();
 
     if (storedUser && token) {
       setUser({
-        name: storedUser.name || "User", // Menggunakan full_name dari data kita
+        name: storedUser.full_name || "User",
         email: storedUser.email || "user@email.com",
-        avatar: "/avatars/shadcn.jpg", // Avatar default
+        avatar: "/avatars/shadcn.jpg",
       });
 
-      const userRoles = storedUser.realm_access?.roles || [];
+      const userRoles = getRoles(token);
       setRoles(userRoles);
     }
   }, []);
@@ -52,18 +47,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     }, []);
     setRoleBasedSideBarNavMenuItems(combined);
   }, [roles]);
-
-	const handleLogout = async () => {
-    try {
-      await AuthService.Logout();
-    } catch (error) {
-      console.error("Gagal menghubungi server saat logout:", error);
-    } finally {
-      removeAuthData();
-      toast.success("Anda berhasil logout.");
-      navigate("/login");
-    }
-  };
 
   return (
     <Sidebar collapsible="icon" {...props}>

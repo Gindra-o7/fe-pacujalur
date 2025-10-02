@@ -15,13 +15,12 @@ const decodeToken = (token: string): CustomJwtPayload | null => {
 export const hasRole = ({ token, roles }: HasRoleProps): boolean => {
   if (!token) return false;
   const userRoles = getRoles(token);
-  // Memeriksa apakah ada peran pengguna yang termasuk dalam daftar peran yang diizinkan
   return roles.some((role) => userRoles.includes(role));
 };
 
-const getRoles = (token: string): string[] => {
+export const getRoles = (token: string): string[] => {
   const decoded = decodeToken(token);
-  return decoded?.realm_access?.roles || [];
+  return decoded?.role ? [decoded.role] : [];
 };
 
 // Fungsi untuk menyimpan token dan data pengguna ke localStorage

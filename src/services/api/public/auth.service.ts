@@ -1,5 +1,5 @@
 import { api } from "@/lib/axios-instance";
-import { TLoginPayload, TLoginResponse } from "@/interfaces/helpers/auth.interface";
+import { TLoginPayload, TLoginResponse, TProfileResponse } from "@/interfaces/helpers/auth.interface";
 
 export default class AuthService {
   public static async Login(payload: TLoginPayload): Promise<TLoginResponse> {
@@ -13,5 +13,9 @@ export default class AuthService {
   public static async RefreshToken(): Promise<boolean> {
     await api().post("/auth/refresh");
     return true;
+  }
+  public static async getProfile(): Promise<TProfileResponse> {
+    const response = await api().get("/auth/profile");
+    return response.data;
   }
 }

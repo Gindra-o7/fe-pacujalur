@@ -4,7 +4,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Calendar, ImageIcon, DollarSign, BedDouble } from "lucide-react";
 import APIAdmin from "@/services/api/admin/api.service";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -21,7 +20,6 @@ const AdminDashboard = () => {
     data: summaryData,
     isLoading,
     isError,
-    error,
   } = useQuery({
     queryKey: ["dashboardSummary"],
     queryFn: APIAdmin.getDashboardData,
@@ -29,22 +27,14 @@ const AdminDashboard = () => {
 
   const recentBookings: Booking[] = [];
 
-  if (isError) {
-    return (
-      <DashboardLayout>
-        <div className="container mx-auto py-10">
-          <Alert variant="destructive">
-            <AlertTitle>Gagal Memuat Data!</AlertTitle>
-            <AlertDescription>
-              Terjadi kesalahan saat mengambil data dasbor. Silakan coba lagi nanti.
-              <br />
-              <span className="text-xs">Detail: {error.message}</span>
-            </AlertDescription>
-          </Alert>
-        </div>
-      </DashboardLayout>
-    );
-  }
+  const defaultSummary = {
+    totalEvents: 0,
+    totalAccommodations: 0,
+    totalBookings: 0,
+    galleryImages: 0,
+  };
+
+  const displayData = isError ? defaultSummary : summaryData ?? defaultSummary;
 
   return (
     <DashboardLayout>
@@ -60,7 +50,7 @@ const AdminDashboard = () => {
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              {isLoading ? <Skeleton className="h-8 w-1/2" /> : <div className="text-2xl font-bold">{summaryData?.totalEvents ?? 0}</div>}
+              {isLoading ? <Skeleton className="h-8 w-1/2" /> : <div className="text-2xl font-bold">{displayData.totalEvents}</div>}
               <p className="text-xs text-muted-foreground">Jumlah event yang akan datang</p>
             </CardContent>
           </Card>
@@ -70,7 +60,7 @@ const AdminDashboard = () => {
               <BedDouble className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              {isLoading ? <Skeleton className="h-8 w-1/2" /> : <div className="text-2xl font-bold">{summaryData?.totalAccommodations ?? 0}</div>}
+              {isLoading ? <Skeleton className="h-8 w-1/2" /> : <div className="text-2xl font-bold">{displayData.totalAccommodations}</div>}
               <p className="text-xs text-muted-foreground">Jumlah penginapan terdaftar</p>
             </CardContent>
           </Card>
@@ -80,7 +70,7 @@ const AdminDashboard = () => {
               <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              {isLoading ? <Skeleton className="h-8 w-1/2" /> : <div className="text-2xl font-bold">{summaryData?.totalBookings ?? 0}</div>}
+              {isLoading ? <Skeleton className="h-8 w-1/2" /> : <div className="text-2xl font-bold">{displayData.totalBookings}</div>}
               <p className="text-xs text-muted-foreground">Pesanan tiket & akomodasi</p>
             </CardContent>
           </Card>
@@ -90,7 +80,7 @@ const AdminDashboard = () => {
               <ImageIcon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              {isLoading ? <Skeleton className="h-8 w-1/2" /> : <div className="text-2xl font-bold">{summaryData?.galleryImages ?? 0}</div>}
+              {isLoading ? <Skeleton className="h-8 w-1/2" /> : <div className="text-2xl font-bold">{displayData.galleryImages}</div>}
               <p className="text-xs text-muted-foreground">Jumlah foto yang ditampilkan</p>
             </CardContent>
           </Card>

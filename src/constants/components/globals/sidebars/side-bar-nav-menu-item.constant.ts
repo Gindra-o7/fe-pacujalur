@@ -1,7 +1,5 @@
 import { SideBarNavMenuItemsProps } from "@/interfaces/components/globals/sidebars/side-bar-nav-menu.interface";
-import {
-  LayoutDashboardIcon,
-} from "lucide-react";
+import { LayoutDashboardIcon, Ship, TicketCheck } from "lucide-react";
 
 export const SideBarNavMenuItems: SideBarNavMenuItemsProps = {
   ADMIN: [
@@ -12,6 +10,16 @@ export const SideBarNavMenuItems: SideBarNavMenuItemsProps = {
           title: "Dashboard",
           url: "/admin/dashboard",
           icon: LayoutDashboardIcon,
+        },
+        {
+          title: "Jalur Desa",
+          url: "/admin/jalur",
+          icon: Ship,
+        },
+        {
+          title: "Acara",
+          url: "/admin/event",
+          icon: TicketCheck,
         },
       ],
     },

@@ -23,4 +23,7 @@ export default class APIAdmin {
     });
     return response.data.data;
   }
+  public static async postJalur(){
+    
+  }
 }

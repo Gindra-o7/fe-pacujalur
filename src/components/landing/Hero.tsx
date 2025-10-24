@@ -105,7 +105,7 @@ const Hero: React.FC<HeroProps> = ({ y, opacity, currentImageIndex, galleryImage
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1.2, type: "spring" }}
           >
-            120
+            1200
           </motion.div>
           <div className="text-sm opacity-80">Kursi Tersedia</div>
         </div>

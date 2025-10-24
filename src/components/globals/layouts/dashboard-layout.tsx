@@ -13,11 +13,13 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/sonner";
 import { capitalizeFirstLetter } from "@/helpers/global.helper";
 import { DashboardLayoutProps } from "@/interfaces/components/globals/layouts/dashboard-layout.interface";
 import { useEffect, useState } from "react";
 
 import { NavLink, useLocation } from "react-router-dom";
+
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const location = useLocation();
@@ -42,6 +44,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <>
       <SidebarProvider>
+        <Toaster/>
         <AppSidebar />
         <SidebarInset>
           <header className="sticky top-0 bg-background flex h-16 shrink-0 items-center justify-between pr-4 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 z-50">
@@ -49,7 +52,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               <SidebarTrigger className="-ml-1" />
               <Separator orientation="vertical" className="mr-2 h-4" />
               <span className="text-base font-semibold block md:hidden">
-                dashboard<span className="italic font-medium">.tif-usr</span>
+                Pacu<span className="italic font-medium">.Jalur</span>
               </span>
               <Breadcrumb className="hidden md:block">
                 <BreadcrumbList>

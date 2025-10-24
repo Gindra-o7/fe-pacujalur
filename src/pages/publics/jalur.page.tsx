@@ -1,6 +1,11 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, MapPin, Sparkles, Moon, Sun, ChevronRight, ArrowLeft } from "lucide-react";
+import pacuJalur5 from "@/assets/pacu-jalur-5.jpeg";
+import pacuJalur6 from "@/assets/pacu-jalur-6.jpeg";
+import pacuJalur7 from "@/assets/pacu-jalur-7.jpeg";
+import pacuJalur8 from "@/assets/pacu-jalur-8.jpeg";
+import pacuJalur9 from "@/assets/pacu-jalur-9.jpeg";
 
 // Types
 interface Jalur {
@@ -19,7 +24,7 @@ const jalurData: Jalur[] = [
     namaJalur: "Sumber Makmur",
     namaDesa: "Pangkalan Indarung",
     kecamatan: "Kuantan Tengah",
-    thumbnail: "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=400&h=300&fit=crop",
+    thumbnail: pacuJalur5,
     description: "Jalur tradisional dengan prestasi gemilang",
   },
   {
@@ -27,7 +32,7 @@ const jalurData: Jalur[] = [
     namaJalur: "Cahaya Bersama",
     namaDesa: "Baserah",
     kecamatan: "Kuantan Mudik",
-    thumbnail: "https://images.unsplash.com/photo-1551244072-5d12893278ab?w=400&h=300&fit=crop",
+    thumbnail: pacuJalur6,
     description: "Tim solid dengan anggota berpengalaman",
   },
   {
@@ -35,7 +40,7 @@ const jalurData: Jalur[] = [
     namaJalur: "Karya Muda",
     namaDesa: "Lubuk Jambi",
     kecamatan: "Kuantan Hilir",
-    thumbnail: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop",
+    thumbnail: pacuJalur6,
     description: "Generasi muda yang inovatif",
   },
   {
@@ -43,7 +48,7 @@ const jalurData: Jalur[] = [
     namaJalur: "Harapan Jaya",
     namaDesa: "Sungai Jering",
     kecamatan: "Kuantan Tengah",
-    thumbnail: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop",
+    thumbnail: pacuJalur7,
     description: "Mempertahankan tradisi leluhur",
   },
   {
@@ -51,7 +56,7 @@ const jalurData: Jalur[] = [
     namaJalur: "Bintang Timur",
     namaDesa: "Pangkalan Indarung",
     kecamatan: "Kuantan Tengah",
-    thumbnail: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400&h=300&fit=crop",
+    thumbnail: pacuJalur8,
     description: "Jalur dengan semangat juang tinggi",
   },
   {
@@ -59,7 +64,7 @@ const jalurData: Jalur[] = [
     namaJalur: "Tuah Sakti",
     namaDesa: "Baserah",
     kecamatan: "Kuantan Mudik",
-    thumbnail: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&h=300&fit=crop",
+    thumbnail: pacuJalur9,
     description: "Warisan budaya yang lestari",
   },
 ];

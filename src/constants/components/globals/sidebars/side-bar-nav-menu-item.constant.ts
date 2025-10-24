@@ -1,5 +1,5 @@
 import { SideBarNavMenuItemsProps } from "@/interfaces/components/globals/sidebars/side-bar-nav-menu.interface";
-import { LayoutDashboardIcon, Ship, TicketCheck } from "lucide-react";
+import { LayoutDashboardIcon, Ship, TicketCheck, House } from "lucide-react";
 
 export const SideBarNavMenuItems: SideBarNavMenuItemsProps = {
   ADMIN: [
@@ -20,6 +20,11 @@ export const SideBarNavMenuItems: SideBarNavMenuItemsProps = {
           title: "Acara",
           url: "/admin/event",
           icon: TicketCheck,
+        },
+        {
+          title: "Penginapan",
+          url: "/admin/penginapan",
+          icon: House,
         },
       ],
     },

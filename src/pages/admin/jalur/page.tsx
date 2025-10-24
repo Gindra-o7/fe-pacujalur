@@ -7,37 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import DashboardLayout from "@/components/globals/layouts/dashboard-layout";
-
-interface Medsos {
-  id?: number;
-  media: "FACEBOOK" | "INSTAGRAM" | "TWITTER" | "TIKTOK" | "YOUTUBE";
-  link: string;
-}
-
-interface Galeri {
-  id?: number;
-  image_url: string;
-  judul?: string;
-  caption?: string;
-}
-
-interface Jalur {
-  id?: number;
-  nama: string;
-  desa: string;
-  kecamatan: string;
-  kabupaten: string;
-  provinsi: string;
-  deskripsi?: string;
-  medsos: Medsos[];
-  galeri: Galeri[];
-}
-
-const API_BASE_URL = "http://localhost:8000/api";
+import APIAdmin from "@/services/api/admin/api.service";
+import { Galeri, Jalur, Medsos } from "@/interfaces/service/api/admin";
+import { toast } from "sonner";
 
 const JalurAdminPage: React.FC = () => {
   const [jalurs, setJalurs] = useState<Jalur[]>([]);
@@ -54,23 +29,18 @@ const JalurAdminPage: React.FC = () => {
     medsos: [],
     galeri: [],
   });
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   useEffect(() => {
-    fetchJalurs();
+    getAllJalur();
   }, []);
 
-  const fetchJalurs = async () => {
+  const getAllJalur = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/jalur`);
-      const result = await response.json();
-      if (result.success) {
-        setJalurs(result.data.data || []);
-      }
-    } catch (err) {
-      setError("Gagal memuat data jalur");
+      const data = await APIAdmin.getAllJalur();
+      setJalurs(data);
+    } catch {
+      toast.error("Gagal memuat data jalur");
     } finally {
       setLoading(false);
     }
@@ -79,60 +49,46 @@ const JalurAdminPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
-    setSuccess("");
 
     try {
-      const url = editMode && currentJalur.id ? `${API_BASE_URL}/jalur/${currentJalur.id}` : `${API_BASE_URL}/jalur`;
-
-      const method = editMode ? "PUT" : "POST";
-
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(currentJalur),
-      });
-
-      const result = await response.json();
+      const result = editMode && currentJalur.id
+        ? await APIAdmin.updateJalur(currentJalur.id, currentJalur)
+        : await APIAdmin.createJalur(currentJalur);
 
       if (result.success) {
-        setSuccess(editMode ? "Jalur berhasil diperbarui" : "Jalur berhasil ditambahkan");
+        toast.success(editMode ? "Jalur berhasil diperbarui" : "Jalur berhasil ditambahkan");
         setShowModal(false);
-        fetchJalurs();
+        getAllJalur();
         resetForm();
       } else {
-        setError(result.message || "Terjadi kesalahan");
+        toast.error(result.message || "Terjadi kesalahan");
       }
-    } catch (err) {
-      setError("Gagal menyimpan data");
+    } catch {
+      toast.error("Gagal menyimpan data");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDelete = async (id: number) => {
-    if (!confirm("Yakin ingin menghapus jalur ini?")) return;
+  // const handleDelete = async (id: number) => {
+  //   if (!confirm("Yakin ingin menghapus jalur ini?")) return;
 
-    setLoading(true);
-    try {
-      const response = await fetch(`${API_BASE_URL}/jalur/${id}`, {
-        method: "DELETE",
-      });
+  //   setLoading(true);
+  //   try {
+  //     const result = await APIAdmin.deleteJalur(id);
 
-      const result = await response.json();
-
-      if (result.success) {
-        setSuccess("Jalur berhasil dihapus");
-        fetchJalurs();
-      } else {
-        setError(result.message || "Gagal menghapus jalur");
-      }
-    } catch (err) {
-      setError("Gagal menghapus jalur");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     if (result.success) {
+  //       toast.success("Jalur berhasil dihapus");
+  //       getAllJalur();
+  //     } else {
+  //       toast.error(result.message || "Gagal menghapus jalur");
+  //     }
+  //   } catch (err) {
+  //     toast.error("Gagal menghapus jalur");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleEdit = (jalur: Jalur) => {
     setCurrentJalur({ ...jalur });
@@ -218,28 +174,6 @@ const JalurAdminPage: React.FC = () => {
             </CardHeader>
           </Card>
 
-          {error && (
-            <Alert variant="destructive">
-              <AlertDescription className="flex justify-between items-center">
-                <span>{error}</span>
-                <Button variant="ghost" size="sm" onClick={() => setError("")}>
-                  <X className="h-4 w-4" />
-                </Button>
-              </AlertDescription>
-            </Alert>
-          )}
-
-          {success && (
-            <Alert className="border-green-200 bg-green-50 text-green-700">
-              <AlertDescription className="flex justify-between items-center">
-                <span>{success}</span>
-                <Button variant="ghost" size="sm" onClick={() => setSuccess("")}>
-                  <X className="h-4 w-4" />
-                </Button>
-              </AlertDescription>
-            </Alert>
-          )}
-
           <Card>
             <CardContent className="p-0">
               {loading && !showModal ? (
@@ -289,7 +223,10 @@ const JalurAdminPage: React.FC = () => {
                               <Button variant="ghost" size="sm" onClick={() => handleEdit(jalur)}>
                                 <Edit2 className="h-4 w-4" />
                               </Button>
-                              <Button variant="ghost" size="sm" onClick={() => jalur.id && handleDelete(jalur.id)} className="text-red-600 hover:text-red-700 hover:bg-red-50">
+                              <Button 
+                              variant="ghost" size="sm" 
+                              // onClick={() => jalur.id && handleDelete(jalur.id)} 
+                              className="text-red-600 hover:text-red-700 hover:bg-red-50">
                                 <Trash2 className="h-4 w-4" />
                               </Button>
                             </div>

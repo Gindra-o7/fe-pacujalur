@@ -2,6 +2,17 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, ZoomIn, Download, Share2, MapPin } from "lucide-react";
 
+import pacuJalur1 from "@/assets/pacu-jalur-1.webp";
+import pacuJalur2 from "@/assets/pacu-jalur-2.png";
+import pacuJalur3 from "@/assets/pacu-jalur-3.jpeg";
+import pacuJalur4 from "@/assets/pacu-jalur-4.jpeg";
+import pacuJalur10 from "@/assets/pacu-jalur-10.jpeg";
+import pacuJalur11 from "@/assets/pacu-jalur-11.jpeg";
+import pacuJalur12 from "@/assets/pacu-jalur-12.jpg";
+import pacuJalur13 from "@/assets/pacu-jalur-13.jpg";
+import perahu1 from "@/assets/Perahu_Baganduang.jpg";
+import perahu2 from "@/assets/Festival_Perahu_Baganduang.jpg";
+
 // Define a type for the gallery item
 interface GalleryItem {
   id: number;
@@ -20,29 +31,29 @@ interface GalleryItem {
 const galleryData: GalleryItem[] = [
   {
     id: 1,
-    image_url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
-    judul: "Pacu Jalur Sungai Kampar",
+    image_url: pacuJalur1,
+    judul: "Pacu Jalur Sungai Kuantan",
     caption: "Momen seru balapan jalur tradisional",
     jalur_id: "jalur-1",
-    jalur_nama: "Jalur Merah",
+    jalur_nama: "Singo Kuantan",
     desa: "Teluk Kuantan",
     kecamatan: "Kuantan Tengah",
     kategori: "jalur",
   },
   {
     id: 2,
-    image_url: "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca",
+    image_url: pacuJalur10,
     judul: "Festival Pembukaan",
     caption: "Upacara adat pembukaan festival",
     jalur_id: "jalur-2",
-    jalur_nama: "Jalur Biru",
+    jalur_nama: "Batu Lompatan Harimau Kompe",
     desa: "Baserah",
     kecamatan: "Sentajo Raya",
     kategori: "jalur",
   },
   {
     id: 3,
-    image_url: "https://images.unsplash.com/photo-1504870712357-65ea720d6078",
+    image_url: pacuJalur11,
     judul: "Peserta Meriah",
     caption: "Kemeriahan peserta di tribun",
     acara_nama: "Festival Pacu Jalur 2024",
@@ -50,29 +61,29 @@ const galleryData: GalleryItem[] = [
   },
   {
     id: 4,
-    image_url: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800",
+    image_url: pacuJalur12,
     judul: "Persiapan Jalur",
     caption: "Tim mempersiapkan jalur untuk kompetisi",
     jalur_id: "jalur-3",
-    jalur_nama: "Jalur Kuning",
+    jalur_nama: "Tuah Keramat Limpato",
     desa: "Lubuk Jambi",
     kecamatan: "Kuantan Mudik",
     kategori: "jalur",
   },
   {
     id: 5,
-    image_url: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29",
+    image_url: pacuJalur13,
     judul: "Sunset di Sungai",
     caption: "Matahari terbenam di lokasi festival",
     jalur_id: "jalur-1",
-    jalur_nama: "Jalur Merah",
+    jalur_nama: "Singo Kuantan",
     desa: "Teluk Kuantan",
     kecamatan: "Kuantan Tengah",
     kategori: "jalur",
   },
   {
     id: 6,
-    image_url: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
+    image_url: pacuJalur2,
     judul: "Acara Malam",
     caption: "Pertunjukan budaya malam hari",
     acara_nama: "Malam Kebudayaan",
@@ -80,7 +91,7 @@ const galleryData: GalleryItem[] = [
   },
   {
     id: 7,
-    image_url: "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca",
+    image_url: pacuJalur3,
     judul: "Penonton Antusias",
     caption: "Antusiasme penonton dari berbagai daerah",
     acara_nama: "Festival Pacu Jalur 2024",
@@ -88,14 +99,30 @@ const galleryData: GalleryItem[] = [
   },
   {
     id: 8,
-    image_url: "https://images.unsplash.com/photo-1504870712357-65ea720d6078",
-    judul: "Jalur Hijau",
-    caption: "Jalur hijau siap bertanding",
+    image_url: pacuJalur4,
+    judul: "Jalur Andalan",
+    caption: "Jalur siap bertanding di pacu jalur",
     jalur_id: "jalur-4",
-    jalur_nama: "Jalur Hijau",
+    jalur_nama: "Siposan Rimbo",
     desa: "Sungai Jering",
     kecamatan: "Benai",
     kategori: "jalur",
+  },
+  {
+    id: 9,
+    image_url: perahu2,
+    judul: "Perahu Baganduang",
+    caption: "Jalur siap bertanding di pacu jalur",
+    acara_nama: "Festival Perahu Baganduang",
+    kategori: "acara",
+  },
+  {
+    id: 10,
+    image_url: perahu1,
+    judul: "Perahu Baganduang",
+    caption: "Jalur siap bertanding di pacu jalur",
+    acara_nama: "Festival Perahu Baganduang",
+    kategori: "acara",
   },
 ];
 

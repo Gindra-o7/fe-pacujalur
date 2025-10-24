@@ -23,7 +23,7 @@ export function SideBarHeader({ role }: SideBarHeaderProps) {
 						</div>
 						<div className="grid flex-1 ml-0.5 mt-0.5 text-left text-sm leading-tight">
 							<span className="truncate font-semibold">
-								dashboard.<span className="italic font-light">tif-usr</span>
+								Pacu.<span className="italic font-light">Jalur</span>
 							</span>
 							<span className="truncate text-xs">{role}</span>
 						</div>

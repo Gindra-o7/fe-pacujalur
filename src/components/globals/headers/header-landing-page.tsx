@@ -38,7 +38,7 @@ const HeaderLandingPageComponent = ({
             <LightLogoUSR className="w-8 h-8" />
           )}
           <span className="text-base font-semibold">
-            dashboard<span className="italic font-medium">.tif-usr</span>
+            Pacu<span className="italic font-medium">.Jalur</span>
           </span>
         </div>
       </NavLink>

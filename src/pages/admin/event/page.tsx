@@ -8,23 +8,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Calendar, MapPin, Plus, Pencil, Trash2, AlertCircle } from "lucide-react";
 import DashboardLayout from "@/components/globals/layouts/dashboard-layout";
-
-interface Acara {
-  id: number;
-  nama: string;
-  lokasi: string;
-  image_url?: string;
-  deskripsi?: string;
-  tgl_mulai: string;
-  tgl_selesai: string;
-}
-
-interface AcaraResponse {
-  terdekat: Acara[];
-  lainnya: Acara[];
-}
-
-const API_BASE_URL = "http://localhost:8000";
+import APIAdmin from "@/services/api/admin/api.service";
+import { Acara } from "@/interfaces/service/api/admin";
 
 const AdminPacuJalur = () => {
   const [acaraTerdekat, setAcaraTerdekat] = useState<Acara[]>([]);
@@ -50,15 +35,12 @@ const AdminPacuJalur = () => {
   }, []);
 
   const fetchAcara = async () => {
+    setLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/acara`);
-      const result = await response.json();
-
-      if (result.success) {
-        setAcaraTerdekat(result.data.terdekat);
-        setAcaraLainnya(result.data.lainnya);
-      }
-    } catch (error) {
+      const data = await APIAdmin.getAllAcara();
+      setAcaraTerdekat(data.terdekat);
+      setAcaraLainnya(data.lainnya);
+    } catch {
       showAlert("error", "Gagal memuat data acara");
     } finally {
       setLoading(false);
@@ -105,19 +87,9 @@ const AdminPacuJalur = () => {
     if (e) e.preventDefault();
 
     try {
-      const url = editingAcara ? `${API_BASE_URL}/acara/${editingAcara.id}` : `${API_BASE_URL}/acara`;
-
-      const method = editingAcara ? "PUT" : "POST";
-
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const result = await response.json();
+      const result = editingAcara
+        ? await APIAdmin.updateAcara(editingAcara.id, formData)
+        : await APIAdmin.createAcara(formData);
 
       if (result.success) {
         showAlert("success", result.message || "Berhasil menyimpan data");
@@ -127,7 +99,7 @@ const AdminPacuJalur = () => {
       } else {
         showAlert("error", result.message || "Gagal menyimpan data");
       }
-    } catch (error) {
+    } catch {
       showAlert("error", "Terjadi kesalahan saat menyimpan data");
     }
   };
@@ -150,11 +122,7 @@ const AdminPacuJalur = () => {
     if (!confirm("Apakah Anda yakin ingin menghapus acara ini?")) return;
 
     try {
-      const response = await fetch(`${API_BASE_URL}/acara/${id}`, {
-        method: "DELETE",
-      });
-
-      const result = await response.json();
+      const result = await APIAdmin.deleteAcara(id);
 
       if (result.success) {
         showAlert("success", "Acara berhasil dihapus");
@@ -162,7 +130,7 @@ const AdminPacuJalur = () => {
       } else {
         showAlert("error", "Gagal menghapus acara");
       }
-    } catch (error) {
+    } catch {
       showAlert("error", "Terjadi kesalahan saat menghapus acara");
     }
   };
